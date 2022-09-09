@@ -12,8 +12,8 @@ def get_songlink_url(song_url: str) -> dict:
             "url": encoded_url
         }
     )
-    response_dict = response.json()
-    links_by_platform = response_dict['linksByPlatform']
+    api_response_dict = response.json()
+    links_by_platform = api_response_dict['linksByPlatform']
     for platform, properties in links_by_platform.items():
         response_dict[platform] = properties['url']
     return response_dict

@@ -1,5 +1,5 @@
 from ytmusicapi import YTMusic
-from src.platforms_integration.youtube_music import get_artist_songs, get_songs_urls
+from src.platforms_integration.youtube_music import get_artist_songs, get_songs_titles_urls
 from src.platforms_integration.song_link import get_multiple_songlink_urls
 def main():
     ytmusic = YTMusic()
@@ -8,7 +8,7 @@ def main():
         artist_name="BRUTTO",
         n_songs=1
     )
-    ytmusic_urls = get_songs_urls(ytmusic_songs)
+    ytmusic_titles, ytmusic_urls = get_songs_titles_urls(ytmusic_songs)
     songlink_urls = get_multiple_songlink_urls(urls=ytmusic_urls)
     for key, value in songlink_urls[0].items():
         print(f"Platform: {key}, URL: {value}")
