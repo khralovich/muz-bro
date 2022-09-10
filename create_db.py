@@ -2,7 +2,7 @@ from ytmusicapi import YTMusic
 import pandas as pd
 from src.platforms_integration.youtube_music import get_artist_songs, get_songs_titles_urls
 from src.platforms_integration.song_link import get_multiple_songlink_urls
-from src.connection.rds import create_connection, create_engine
+from src.connection.rds import create_connection, create_db_engine
 
 artists_list = ["Петля пристрастия", "relikt", "Ляпис трубецкой", "Akute"]
 # artists_list = ["BRUTTO"]
@@ -29,7 +29,7 @@ def save_top_10_songs(ytmusic_client, artist: str):
     new_df = _sort_dataframe_columns(new_df)
     new_df.to_csv(csv_path)
     print('done')
-    engine = create_engine()
+    engine = create_db_engine()
     # connection = create_connection()
     new_df.to_sql(name="songs",con=engine, schema="public", if_exists="append", index=False)
 

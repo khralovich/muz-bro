@@ -12,6 +12,6 @@ def create_connection():
         port=RDS_PORT
     )
 
-def create_engine():
+def create_db_engine():
     engine = create_engine(sql_alchemy_db_url)
     return engine
