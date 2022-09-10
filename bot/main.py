@@ -12,12 +12,12 @@ def startCommand(update: Update, context: CallbackContext):
     buttons = [[KeyboardButton("Здзіві мяне!"),
                 KeyboardButton("Рэп"),
                 KeyboardButton("Фолк")],
-               [KeyboardButton("Pop"),
-                KeyboardButton("Alter music"),
-                KeyboardButton("Metal")],
-               [KeyboardButton("Indie"),
-                KeyboardButton("Electro"),
-                KeyboardButton("Фолк")]]
+               [KeyboardButton("Поп"),
+                KeyboardButton("Альт рок"),
+                KeyboardButton("Метал")],
+               [KeyboardButton("Індзі рок"),
+                KeyboardButton("Электроніка"),
+                KeyboardButton("->")]]
     context.bot.send_message(chat_id=update.effective_chat.id, text="Прывітанне! Я твой музычны бро :) Што паслухаем? Калі не ведаеш, з чаго пачаць — абяры /help",
                              reply_markup=ReplyKeyboardMarkup(buttons))
 
@@ -27,8 +27,8 @@ def messageHandler(update: Update, context: CallbackContext):
         text = keysOutput["Здзіві мяне!"]
     if "Рэп" in update.message.text:
         text = keysOutput["Рэп"]
-    if "Electro" in update.message.text:
-        text = keysOutput["Electro"]
+    if "Электроніка" in update.message.text:
+        text = keysOutput["Электроніка"]
     if text:
         context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
