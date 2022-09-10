@@ -1,5 +1,6 @@
 from ytmusicapi import YTMusic
 import pandas as pd
+from sqlalchemy.dialects import postgresql
 from src.platforms_integration.youtube_music import get_artist_songs, get_songs_titles_urls
 from src.platforms_integration.song_link import get_multiple_songlink_urls
 from src.connection.rds import create_connection, create_db_engine
@@ -25,7 +26,17 @@ def save_top_10_songs(ytmusic_client, artist: str):
     print('done')
     engine = create_db_engine()
     # connection = create_connection()
-    new_df.to_sql(name="songs",con=engine, schema="public", if_exists="append", index=False)
+    new_df.to_sql(
+        name="songs",
+        con=engine,
+        schema="public",
+        if_exists="append",
+        index=False,
+        dtype={
+            "genre": postgresql.ARRAY,
+            "mood": postgresql.ARRAY
+        }
+    )
 
 def main():
     ytmusic = YTMusic()
