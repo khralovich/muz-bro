@@ -21,10 +21,6 @@ def first_menu(bot, update):
   bot.callback_query.message.edit_text(first_menu_message(),
                           reply_markup=first_menu_keyboard())
 
-def second_menu(bot, update):
-  bot.callback_query.message.edit_text(second_menu_message(),
-                          reply_markup=second_menu_keyboard())
-
 def first_submenu(bot, update):
   pass
 
@@ -42,21 +38,21 @@ def main_menu_keyboard():
               [InlineKeyboardButton('Метал', callback_data='m3')],
               [InlineKeyboardButton('Індзі рок', callback_data='m3')],
               [InlineKeyboardButton('Рэп', callback_data='m3')],
-              [InlineKeyboardButton('Электроніка', callback_data='m3')]
+              [InlineKeyboardButton('Электроніка', callback_data='m3')],
               ]
   return InlineKeyboardMarkup(keyboard)
 
 def first_menu_keyboard():
-  keyboard = [[InlineKeyboardButton('Submenu 1-1', callback_data='m1_1')],
-              [InlineKeyboardButton('Submenu 1-2', callback_data='m1_2')],
+  keyboard = [[InlineKeyboardButton('Рамантычны', callback_data='m1_1')],
+              [InlineKeyboardButton('Вясёлы', callback_data='m1_2')],
+              [InlineKeyboardButton('Задуменны', callback_data='m1_2')],
+              [InlineKeyboardButton('Меланхалічны', callback_data='m1_2')],
+              [InlineKeyboardButton('Ідылічны', callback_data='m1_2')],
+              [InlineKeyboardButton('Гуллівы', callback_data='m1_2')],
               [InlineKeyboardButton('Назад', callback_data='main')]]
   return InlineKeyboardMarkup(keyboard)
 
-def second_menu_keyboard():
-  keyboard = [[InlineKeyboardButton('Submenu 2-1', callback_data='m2_1')],
-              [InlineKeyboardButton('Submenu 2-2', callback_data='m2_2')],
-              [InlineKeyboardButton('Назад', callback_data='main')]]
-  return InlineKeyboardMarkup(keyboard)
+
 
 ############################# Helpers #########################################
 
@@ -77,19 +73,17 @@ def info(update: Update, context: CallbackContext):
 
 ############################# Messages #########################################
 def main_menu_message():
-  return 'Choose the option in main menu:'
+  return 'Абяры стыль музыкі, якую хочаш паслухаць:'
 
 def first_menu_message():
-  return 'Choose the submenu in first menu:'
+  return 'Абяры свой настрой:'
 
-def second_menu_message():
-  return 'Choose the submenu in second menu:'
+
 
 ############################# Handlers #########################################
 updater.dispatcher.add_handler(CommandHandler('start', start))
 updater.dispatcher.add_handler(CallbackQueryHandler(main_menu, pattern='main'))
 updater.dispatcher.add_handler(CallbackQueryHandler(first_menu, pattern='m1'))
-updater.dispatcher.add_handler(CallbackQueryHandler(second_menu, pattern='m2'))
 updater.dispatcher.add_handler(CallbackQueryHandler(first_submenu, pattern='m1_1'))
 updater.dispatcher.add_handler(CallbackQueryHandler(second_submenu, pattern='m2_1'))
 updater.dispatcher.add_handler(CommandHandler('help', help))
