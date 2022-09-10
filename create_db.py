@@ -7,7 +7,7 @@ from src.platforms_integration.song_link import get_multiple_songlink_urls
 artists_list = ["Петля пристрастия", "relikt", "Ляпис трубецкой", "Akute"]
 # artists_list = ["BRUTTO"]
 csv_path = "./db.csv"
-
+FIRST_COLUMNS = ["artist", "title"]
 
 def save_top_10_songs(ytmusic_client, artist: str):
     ytmusic_songs = get_artist_songs(
@@ -26,11 +26,9 @@ def save_top_10_songs(ytmusic_client, artist: str):
         new_df = pd.concat([new_df, df])
     except:
         pass
+    new_df = _sort_dataframe_columns(new_df)
     new_df.to_csv(csv_path)
     print('done')
-    
-    
-
 
 def main():
     ytmusic = YTMusic()
@@ -38,8 +36,13 @@ def main():
     for artist in artists_list:
         save_top_10_songs(ytmusic, artist)
         
-    
-
+def _sort_dataframe_columns(df: pd.DataFrame):
+    df = df.copy()
+    columns_order = FIRST_COLUMNS
+    for column_name in df.columns.values:
+        if column_name not in FIRST_COLUMNS:
+            columns_order.append(column_name)
+    return df[columns_order]    
 
 
 if __name__ == '__main__':
