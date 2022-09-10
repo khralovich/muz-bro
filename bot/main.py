@@ -38,12 +38,16 @@ def main_menu_keyboard():
   return InlineKeyboardMarkup(keyboard)
 
 def first_menu_keyboard():
-  keyboard = [[InlineKeyboardButton('Рамантычны', callback_data='m1_1')],
-              [InlineKeyboardButton('Вясёлы', callback_data='m1_2')],
-              [InlineKeyboardButton('Задуменны', callback_data='m1_2')],
-              [InlineKeyboardButton('Меланхалічны', callback_data='m1_2')],
-              [InlineKeyboardButton('Ідылічны', callback_data='m1_2')],
-              [InlineKeyboardButton('Гуллівы', callback_data='m1_2')],
+  keyboard = [[InlineKeyboardButton('Імпрэза', callback_data='m1_1')],
+              [InlineKeyboardButton('Спорт', callback_data='m1_2')],
+              [InlineKeyboardButton('Рамантыка', callback_data='m1_2')],
+              [InlineKeyboardButton('Разбітае сэрцайка', callback_data='m1_2')],
+              [InlineKeyboardButton('Медытацыя', callback_data='m1_2')],
+              [InlineKeyboardButton('Чыл', callback_data='m1_2')],
+              [InlineKeyboardButton('У дарозе', callback_data='m1_2')],
+              [InlineKeyboardButton('Самота', callback_data='m1_2')],
+              [InlineKeyboardButton('Надзея', callback_data='m1_2')],
+              [InlineKeyboardButton('Праца\вучоба', callback_data='m1_2')],
               [InlineKeyboardButton('Іншы', callback_data='m1_2')],
               [InlineKeyboardButton('Назад', callback_data='main')]]
   return InlineKeyboardMarkup(keyboard)
@@ -72,7 +76,7 @@ def main_menu_message():
   return 'Абяры стыль музыкі, якую хочаш паслухаць:'
 
 def first_menu_message():
-  return 'Абяры свой настрой:'
+  return 'Абяры настрой, які адпавядае сітуацыі, а мы паклапоцімся пра музыку:'
 
 
 
