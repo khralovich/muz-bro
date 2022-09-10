@@ -4,9 +4,8 @@ from src.platforms_integration.youtube_music import get_artist_songs, get_songs_
 from src.platforms_integration.song_link import get_multiple_songlink_urls
 from src.connection.rds import create_connection, create_db_engine
 
-artists_list = ["Петля пристрастия", "relikt", "Ляпис трубецкой", "Akute"]
-# artists_list = ["BRUTTO"]
-csv_path = "./db.csv"
+# artists_list = ["Петля пристрастия", "relikt", "Ляпис трубецкой", "Akute"]
+artists_list = ["BRUTTO"]
 FIRST_COLUMNS = ["artist", "title"]
 
 def save_top_10_songs(ytmusic_client, artist: str):
@@ -20,14 +19,7 @@ def save_top_10_songs(ytmusic_client, artist: str):
     new_df = pd.DataFrame.from_records(songlink_urls)
     new_df['artist'] = artist
     new_df['title'] = ytmusic_titles
-    # If csv file already exists, add new records. Otherwise do nothing
-    try:
-        df = pd.read_csv(csv_path, index_col=0)
-        new_df = pd.concat([new_df, df])
-    except:
-        pass
-    new_df = _sort_dataframe_columns(new_df)
-    new_df.to_csv(csv_path)
+    # new_df = _sort_dataframe_columns(new_df)
     print('done')
     engine = create_db_engine()
     # connection = create_connection()
