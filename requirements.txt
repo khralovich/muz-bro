@@ -1,0 +1,4 @@
+ytmusicapi
+pandas
+psycopg2
+requests
