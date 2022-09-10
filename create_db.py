@@ -19,6 +19,8 @@ def save_top_10_songs(ytmusic_client, artist: str):
     new_df = pd.DataFrame.from_records(songlink_urls)
     new_df['artist'] = artist
     new_df['title'] = ytmusic_titles
+    new_df['genre'] = [["test", "test1"] for i in range(new_df.shape[0])]
+    new_df['mood'] = [["sport", "cry"] for i in range(new_df.shape[0])]
     # new_df = _sort_dataframe_columns(new_df)
     print('done')
     engine = create_db_engine()
