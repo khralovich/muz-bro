@@ -1,4 +1,5 @@
 ytmusicapi
 pandas
 psycopg2
+sqlalchemy
 requests
