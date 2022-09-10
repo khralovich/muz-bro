@@ -9,26 +9,26 @@ updater = Updater(API_KEY, use_context=True)
 dispatcher = updater.dispatcher
 
 def startCommand(update: Update, context: CallbackContext):
-    buttons = [[KeyboardButton(keysDict["key1"]),
-                KeyboardButton(keysDict["key2"]),
-                KeyboardButton(keysDict["key3"])],
-               [KeyboardButton(keysDict["key4"]),
-                KeyboardButton(keysDict["key5"]),
-                KeyboardButton(keysDict["key6"])],
-               [KeyboardButton(keysDict["key7"]),
-                KeyboardButton(keysDict["key8"]),
-                KeyboardButton(keysDict["key9"])]]
+    buttons = [[KeyboardButton("Здзіві мяне!"),
+                KeyboardButton("Рэп"),
+                KeyboardButton("Фолк")],
+               [KeyboardButton("Pop"),
+                KeyboardButton("Alter music"),
+                KeyboardButton("Metal")],
+               [KeyboardButton("Indie"),
+                KeyboardButton("Electro"),
+                KeyboardButton("Фолк")]]
     context.bot.send_message(chat_id=update.effective_chat.id, text="Прывітанне! Я твой музычны бро :) Што паслухаем? Калі не ведаеш, з чаго пачаць — абяры /help",
                              reply_markup=ReplyKeyboardMarkup(buttons))
 
 
 def messageHandler(update: Update, context: CallbackContext):
-    if keysDict["key1"] in update.message.text:
-        text = keysOutput["key1output"]
-    if keysDict["key2"] in update.message.text:
-        text = keysOutput["key2output"]
-    if keysDict["key3"] in update.message.text:
-        text = keysOutput["key3output"]
+    if "Здзіві мяне!" in update.message.text:
+        text = keysOutput["Здзіві мяне!"]
+    if "Рэп" in update.message.text:
+        text = keysOutput["Рэп"]
+    if "Electro" in update.message.text:
+        text = keysOutput["Electro"]
     if text:
         context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
