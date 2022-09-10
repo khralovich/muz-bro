@@ -1,8 +1,9 @@
+from ast import Call
 from telegram import *
-from telegram.ext import *
+from telegram.ext import Updater, CallbackContext, CommandHandler, CallbackQueryHandler
 from config import API_KEY
-from btns import *
-from vars import *
+# from btns import *
+# from vars import *
 
 # https://docs.python-telegram-bot.org/en/stable/telegram.ext.filters.html#telegram.ext.filters.Filters
 
@@ -13,9 +14,16 @@ def start(update: Update, context: CallbackContext):
   context.bot.send_message(chat_id=update.effective_chat.id, text="Прывітанне! Я твой музычны бро :) Што паслухаем? Калі не ведаеш, з чаго пачаць — абяры /help",
                          reply_markup=main_menu_keyboard())
 
-def main_menu(bot, update):
-  bot.callback_query.message.edit_text(main_menu_message(),
+# def main_menu(bot, update):
+#   bot.callback_query.message.edit_text(main_menu_message(),
+#                           reply_markup=main_menu_keyboard())
+
+def main_menu(update: Update, context: CallbackContext):
+  genre = update.callback_query.data
+  print(genre)
+  update.callback_query.message.edit_text(main_menu_message(),
                           reply_markup=main_menu_keyboard())
+
 
 def first_menu(bot, update):
   bot.callback_query.message.edit_text(first_menu_message(),
@@ -27,13 +35,13 @@ def error(update, context):
 
 ############################ Keyboards #########################################
 def main_menu_keyboard():
-  keyboard = [[InlineKeyboardButton('Здзіві мяне!', callback_data='m1')],
-              [InlineKeyboardButton('Фолк', callback_data='m1')],
-              [InlineKeyboardButton('Поп', callback_data='m1')],
-              [InlineKeyboardButton('Метал', callback_data='m1')],
-              [InlineKeyboardButton('Індзі рок', callback_data='m1')],
-              [InlineKeyboardButton('Рэп', callback_data='m1')],
-              [InlineKeyboardButton('Электроніка', callback_data='m1')],
+  keyboard = [[InlineKeyboardButton('Здзіві мяне!', callback_data='Здзіві мяне')],
+              [InlineKeyboardButton('Фолк', callback_data='Фолк')],
+              [InlineKeyboardButton('Поп', callback_data='Поп')],
+              [InlineKeyboardButton('Метал', callback_data='Метал')],
+              [InlineKeyboardButton('Індзі рок', callback_data='Індзі рок')],
+              [InlineKeyboardButton('Рэп', callback_data='Рэп')],
+              [InlineKeyboardButton('Электроніка', callback_data='Электроніка')],
               ]
   return InlineKeyboardMarkup(keyboard)
 
@@ -82,8 +90,8 @@ def first_menu_message():
 
 ############################# Handlers #########################################
 updater.dispatcher.add_handler(CommandHandler('start', start))
-updater.dispatcher.add_handler(CallbackQueryHandler(main_menu, pattern='main'))
-updater.dispatcher.add_handler(CallbackQueryHandler(first_menu, pattern='m1'))
+updater.dispatcher.add_handler(CallbackQueryHandler(main_menu))
+updater.dispatcher.add_handler(CallbackQueryHandler(first_menu))
 updater.dispatcher.add_handler(CommandHandler('help', help))
 updater.dispatcher.add_handler(CommandHandler('info', info))
 updater.dispatcher.add_error_handler(error)
