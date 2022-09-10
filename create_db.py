@@ -1,4 +1,3 @@
-from operator import index
 from ytmusicapi import YTMusic
 import pandas as pd
 from src.platforms_integration.youtube_music import get_artist_songs, get_songs_titles_urls
