@@ -21,11 +21,6 @@ def first_menu(bot, update):
   bot.callback_query.message.edit_text(first_menu_message(),
                           reply_markup=first_menu_keyboard())
 
-def first_submenu(bot, update):
-  pass
-
-def second_submenu(bot, update):
-  pass
 
 def error(update, context):
     print(f'Update {update} caused error {context.error}')
@@ -33,12 +28,12 @@ def error(update, context):
 ############################ Keyboards #########################################
 def main_menu_keyboard():
   keyboard = [[InlineKeyboardButton('Здзіві мяне!', callback_data='m1')],
-              [InlineKeyboardButton('Фолк', callback_data='m2')],
-              [InlineKeyboardButton('Поп', callback_data='m3')],
-              [InlineKeyboardButton('Метал', callback_data='m3')],
-              [InlineKeyboardButton('Індзі рок', callback_data='m3')],
-              [InlineKeyboardButton('Рэп', callback_data='m3')],
-              [InlineKeyboardButton('Электроніка', callback_data='m3')],
+              [InlineKeyboardButton('Фолк', callback_data='m1')],
+              [InlineKeyboardButton('Поп', callback_data='m1')],
+              [InlineKeyboardButton('Метал', callback_data='m1')],
+              [InlineKeyboardButton('Індзі рок', callback_data='m1')],
+              [InlineKeyboardButton('Рэп', callback_data='m1')],
+              [InlineKeyboardButton('Электроніка', callback_data='m1')],
               ]
   return InlineKeyboardMarkup(keyboard)
 
@@ -49,6 +44,7 @@ def first_menu_keyboard():
               [InlineKeyboardButton('Меланхалічны', callback_data='m1_2')],
               [InlineKeyboardButton('Ідылічны', callback_data='m1_2')],
               [InlineKeyboardButton('Гуллівы', callback_data='m1_2')],
+              [InlineKeyboardButton('Іншы', callback_data='m1_2')],
               [InlineKeyboardButton('Назад', callback_data='main')]]
   return InlineKeyboardMarkup(keyboard)
 
@@ -84,8 +80,6 @@ def first_menu_message():
 updater.dispatcher.add_handler(CommandHandler('start', start))
 updater.dispatcher.add_handler(CallbackQueryHandler(main_menu, pattern='main'))
 updater.dispatcher.add_handler(CallbackQueryHandler(first_menu, pattern='m1'))
-updater.dispatcher.add_handler(CallbackQueryHandler(first_submenu, pattern='m1_1'))
-updater.dispatcher.add_handler(CallbackQueryHandler(second_submenu, pattern='m2_1'))
 updater.dispatcher.add_handler(CommandHandler('help', help))
 updater.dispatcher.add_handler(CommandHandler('info', info))
 updater.dispatcher.add_error_handler(error)
