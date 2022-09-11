@@ -27,7 +27,6 @@ HTML_TEMPLATE = jinja2.Template(
 all_genres = ['Здзіві мяне!', "Фолк", 'Поп', 'Метал', 'Індзі', 'Рэп', 'Рок', 'Электроніка', 'Skip genre']
 all_moods = ['Імпрэза', 'Спорт', 'Рамантыка', 'Разбітае сэрцайка', 'Медытацыя','Чыл','У дарозе','Самота','Надзея','Праца\вучоба','Skip mood']
 goback = ["Назад"]
-shown_songs = 0
 
 
 def start(update: Update, context: CallbackContext):
@@ -37,6 +36,7 @@ def start(update: Update, context: CallbackContext):
 
 
 def main_menu(update: Update, context: CallbackContext):
+    shown_songs = context.user_data.get(shown_songs, 0)
     reply = update.callback_query.data
     if reply in all_genres:
         # User selected the genre
@@ -68,7 +68,7 @@ def main_menu(update: Update, context: CallbackContext):
                 platforms_5=[{"name": name, "url": url} for name, url in songs[shown_songs+4].items() if name in SELECTED_PLATFORMS],
             )
             context.bot.send_message(chat_id=update.effective_chat.id, text=html_render, parse_mode="HTML" ,reply_markup=like_buttons())
-            shown_songs += 5
+            context.user_data['shown_songs'] = shown_songs + 5
     if reply in goback:
         print(reply)
         context.bot.send_message(chat_id=update.effective_chat.id, text="Давай пачнем з выбару жанру. Абяры які-небудзь з наступных:",
