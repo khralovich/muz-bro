@@ -51,6 +51,7 @@ def main_menu(update: Update, context: CallbackContext):
         songs = read_songs(genre="test", mood=None, shown_songs=shown_songs)
         print('Read songs!')
         n_songs = len(songs)
+        print(n_songs, " Songs")
         if n_songs >= 5:
             html_render = HTML_TEMPLATE.render(
             artist_1=songs[0]['artist'], title_1=songs[0]['title'],
@@ -63,14 +64,17 @@ def main_menu(update: Update, context: CallbackContext):
             platforms_3=[{"name": name, "url": url} for name, url in songs[2].items() if name in SELECTED_PLATFORMS],
             platforms_4=[{"name": name, "url": url} for name, url in songs[3].items() if name in SELECTED_PLATFORMS],
             platforms_5=[{"name": name, "url": url} for name, url in songs[4].items() if name in SELECTED_PLATFORMS],
-        )
+            )
+            print("Rendered html")
             context.bot.send_message(chat_id=update.effective_chat.id, text=html_render, parse_mode="HTML" ,reply_markup=like_buttons())
+            print("Sent message!")
             for song in songs[:5]:
                 if song['artist'] not in shown_songs:
                     shown_songs[song['artist']] = [song['title']]
                 else:
                     shown_songs[song['artist']].append(song['title'])
             context.user_data['shown_songs'] = shown_songs
+            print("updated context")
     if reply in goback:
         print(reply)
         context.bot.send_message(chat_id=update.effective_chat.id, text="Давай пачнем з выбару жанру. Абяры які-небудзь з наступных:",
