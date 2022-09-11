@@ -14,7 +14,7 @@ updater = Updater(API_KEY, use_context=True)
 user_reply = None
 
 
-# HTML szablon
+# HTML template
 HTML_TEMPLATE = jinja2.Template(
     """
     1) {{artist_1}} - {{title_1}} {% for platform in platforms_1 -%} <a href="{{platform.url}}">{{platform.name}}</a>  {% endfor %}
@@ -27,12 +27,12 @@ HTML_TEMPLATE = jinja2.Template(
 
 all_genres = ['Здзіві мяне!', "Фолк", 'Поп', 'Метал', 'Індзі', 'Рэп', 'Рок', 'Электроніка', 'Skip genre']
 all_moods = ['Імпрэза', 'Спорт', 'Рамантыка', 'Разбітае сэрцайка', 'Медытацыя','Чыл','У дарозе','Самота','Надзея','Праца\вучоба','Skip mood']
+goback = ["Назад"]
 
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Прывітанне! Я твой музычны бро :) Што паслухаем? Калі не ведаеш, з чаго пачаць — абяры /help",
                              reply_markup=main_menu_keyboard())
-
 
 
 def main_menu(update: Update, context: CallbackContext):
@@ -44,7 +44,6 @@ def main_menu(update: Update, context: CallbackContext):
         print(genre)
     if reply in all_moods:
         mood = reply
-        update.callback_query.answer()
         print(mood)
         songs_df = read_songs(genre="test", mood=None)
         songs = songs_df.to_dict('records')
@@ -61,8 +60,10 @@ def main_menu(update: Update, context: CallbackContext):
             platforms_5=[{"name": name, "url": url} for name, url in songs[4].items() if name in SELECTED_PLATFORMS],
         )
         context.bot.send_message(chat_id=update.effective_chat.id, text=html_render, parse_mode="HTML" ,reply_markup=like_buttons())
-
-
+    if reply in goback:
+        print(reply)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Давай пачнем з выбару жанру. Абяры які-небудзь з наступных:",
+                                 reply_markup=main_menu_keyboard())
 
 
 def error(update, context):
@@ -85,11 +86,9 @@ def main_menu_keyboard():
 
 def like_buttons():
     keyboard = [[InlineKeyboardButton("Хачу яшчэ", callback_data="more")],
-                [InlineKeyboardButton("Назад да жанраў", callback_data="back")]
+                [InlineKeyboardButton("Назад да жанраў", callback_data="Назад")]
                 ]
-
     return InlineKeyboardMarkup(keyboard)
-
 
 
 def first_menu_keyboard():
@@ -103,8 +102,8 @@ def first_menu_keyboard():
                 [InlineKeyboardButton('Самота', callback_data='Самота')],
                 [InlineKeyboardButton('Надзея', callback_data='Надзея')],
                 [InlineKeyboardButton('Праца\вучоба', callback_data='Праца\вучоба')],
-                [InlineKeyboardButton('Прапусціць', callback_data='Skip')],
-                [InlineKeyboardButton('Назад', callback_data="Skip mood")]
+                [InlineKeyboardButton('Прапусціць', callback_data='Skip mood')],
+                [InlineKeyboardButton('Назад', callback_data="Назад")]
     ]
     return InlineKeyboardMarkup(keyboard)
 
