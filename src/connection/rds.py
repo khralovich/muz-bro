@@ -1,4 +1,5 @@
 import psycopg2
+import pandas as pd
 from sqlalchemy import create_engine
 from config import RDS_ENDPOINT, RDS_USERNAME, RDS_PASSWORD, RDS_PORT, RDS_DB_NAME
 
@@ -19,6 +20,10 @@ def create_db_engine():
     return engine
 
 def read_songs(genre: str = None, mood: str = None):
+    if genre == "skip_genre":
+        genre = None
+    if mood == "skip_mood":
+        mood = None
     if genre is None and mood is None:
         # None of genre/mood selected
         query = "select * from public.songs"
@@ -32,10 +37,6 @@ def read_songs(genre: str = None, mood: str = None):
     else:
         # Only mood selected
         query = f"select * from public.songs where '{mood}' = ANY(mood)"
-    
-    with create_connection() as connection:
-        cursor = connection.cursor()
-        cursor.execute(query)
-        result = cursor.fetchall()
-        connection.commit()
-    return result
+    engine = create_db_engine()
+    result_df = pd.read_sql_query(query, con=engine)
+    return result_df
