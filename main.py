@@ -36,7 +36,7 @@ def start(update: Update, context: CallbackContext):
 
 
 def main_menu(update: Update, context: CallbackContext):
-    shown_songs = context.user_data.get('shown_songs', {})
+    shown_songs = context.chat_data.get('shown_songs', {})
     reply = update.callback_query.data
     if reply in all_genres:
         # User selected the genre
@@ -73,7 +73,7 @@ def main_menu(update: Update, context: CallbackContext):
                     shown_songs[song['artist']] = [song['title']]
                 else:
                     shown_songs[song['artist']].append(song['title'])
-            context.user_data['shown_songs'] = shown_songs
+            context.chat_data['shown_songs'] = shown_songs
             print("updated context")
     if reply in goback:
         print(reply)
