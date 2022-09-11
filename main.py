@@ -17,11 +17,11 @@ user_reply = None
 # HTML szablon
 HTML_TEMPLATE = jinja2.Template(
     """
-    1) {{artist_1}} - {{title_1}} {% for platform in platforms_1 -%} <a href="{{platform.url}}">{{platform.name}}&nbsp;</a>{% endfor %}
-    2) {{artist_2}} - {{title_2}} {% for platform in platforms_2 -%} <a href="{{platform.url}}">{{platform.name}}&nbsp;</a>{% endfor %}
-    3) {{artist_3}} - {{title_3}} {% for platform in platforms_3 -%} <a href="{{platform.url}}">{{platform.name}}&nbsp;</a>{% endfor %}
-    4) {{artist_4}} - {{title_4}} {% for platform in platforms_4 -%} <a href="{{platform.url}}">{{platform.name}}&nbsp;</a>{% endfor %}
-    5) {{artist_5}} - {{title_5}} {% for platform in platforms_5 -%} <a href="{{platform.url}}">{{platform.name}}&nbsp;</a>{% endfor %}
+    1) {{artist_1}} - {{title_1}} {% for platform in platforms_1 -%} <a href="{{platform.url}}">{{platform.name}};</a>  {% endfor %}
+    2) {{artist_2}} - {{title_2}} {% for platform in platforms_2 -%} <a href="{{platform.url}}">{{platform.name}};</a>  {% endfor %}
+    3) {{artist_3}} - {{title_3}} {% for platform in platforms_3 -%} <a href="{{platform.url}}">{{platform.name}};</a>  {% endfor %}
+    4) {{artist_4}} - {{title_4}} {% for platform in platforms_4 -%} <a href="{{platform.url}}">{{platform.name}};</a>  {% endfor %}
+    5) {{artist_5}} - {{title_5}} {% for platform in platforms_5 -%} <a href="{{platform.url}}">{{platform.name}};</a>  {% endfor %}
     """
 )
 
