@@ -1,17 +1,29 @@
+import jinja2
 from ast import Call
 from telegram import *
 from telegram.ext import Updater, CallbackContext, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
+from src.connection.rds import read_songs
+from src.platforms_integration.song_link import SELECTED_PLATFORMS
 from config import API_KEY
+
 
 # https://docs.python-telegram-bot.org/en/stable/telegram.ext.filters.html#telegram.ext.filters.Filters
 
 updater = Updater(API_KEY, use_context=True)
 
-genre = None
-mood = None
+user_reply = None
 
 
 # HTML szablon
+HTML_TEMPLATE = jinja2.Template(
+    """
+    1) {{artist_1}} - {{title_1}} {% for platform in platforms_1 -%} <a href="{{platform.url}}">{{platform.name}}</a>  {% endfor %}
+    2) {{artist_2}} - {{title_2}} {% for platform in platforms_2 -%} <a href="{{platform.url}}">{{platform.name}}</a>  {% endfor %}
+    3) {{artist_3}} - {{title_3}} {% for platform in platforms_3 -%} <a href="{{platform.url}}">{{platform.name}}</a>  {% endfor %}
+    4) {{artist_4}} - {{title_4}} {% for platform in platforms_4 -%} <a href="{{platform.url}}">{{platform.name}}</a>  {% endfor %}
+    5) {{artist_5}} - {{title_5}} {% for platform in platforms_5 -%} <a href="{{platform.url}}">{{platform.name}}</a>  {% endfor %}
+    """
+)
 
 all_genres = ['Здзіві мяне!', "Фолк", 'Поп', 'Метал', 'Індзі', 'Рэп', 'Рок', 'Электроніка', 'Skip genre']
 all_moods = ['Імпрэза', 'Спорт', 'Рамантыка', 'Разбітае сэрцайка', 'Медытацыя','Чыл','У дарозе','Самота','Надзея','Праца\вучоба','Skip mood']
@@ -26,6 +38,7 @@ def start(update: Update, context: CallbackContext):
 def main_menu(update: Update, context: CallbackContext):
     reply = update.callback_query.data
     if reply in all_genres:
+        # User selected the genre
         genre = reply
         context.bot.send_message(chat_id=update.effective_chat.id, text=first_menu_message(), reply_markup=first_menu_keyboard())
         print(genre)
@@ -33,7 +46,21 @@ def main_menu(update: Update, context: CallbackContext):
         mood = reply
         update.callback_query.answer()
         print(mood)
-        context.bot.send_message(chat_id=update.effective_chat.id, text="<u>Тут будзе ХТМЛ</u>", parse_mode="HTML" ,reply_markup=like_buttons())
+        songs_df = read_songs(genre="test", mood=None)
+        songs = songs_df.to_dict('records')
+        html_render = HTML_TEMPLATE.render(
+            artist_1=songs[0]['artist'], title_1=songs[0]['title'],
+            artist_2=songs[1]['artist'], title_2=songs[1]['title'],
+            artist_3=songs[2]['artist'], title_3=songs[2]['title'],
+            artist_4=songs[3]['artist'], title_4=songs[3]['title'],
+            artist_5=songs[4]['artist'], title_5=songs[4]['title'],
+            platforms_1=[{"name": name, "url": url} for name, url in songs[0].items() if name in SELECTED_PLATFORMS],
+            platforms_2=[{"name": name, "url": url} for name, url in songs[1].items() if name in SELECTED_PLATFORMS],
+            platforms_3=[{"name": name, "url": url} for name, url in songs[2].items() if name in SELECTED_PLATFORMS],
+            platforms_4=[{"name": name, "url": url} for name, url in songs[3].items() if name in SELECTED_PLATFORMS],
+            platforms_5=[{"name": name, "url": url} for name, url in songs[4].items() if name in SELECTED_PLATFORMS],
+        )
+        context.bot.send_message(chat_id=update.effective_chat.id, text=html_render, parse_mode="HTML" ,reply_markup=like_buttons())
 
 
 
