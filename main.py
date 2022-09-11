@@ -51,7 +51,7 @@ def main_menu(update: Update, context: CallbackContext):
         songs = read_songs(genre="test", mood=None, shown_songs=shown_songs)
         n_songs = len(songs)
         print(n_songs, " Songs")
-        print(HTML)
+        print(HTML_TEMPLATE)
         if n_songs >= 5:
             html_render = HTML_TEMPLATE.render(
             artist_1=songs[0]['artist'], title_1=songs[0]['title'],
