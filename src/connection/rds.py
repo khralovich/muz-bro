@@ -40,5 +40,6 @@ def read_songs(genre: str = None, mood: str = None, shown_songs: dict = []):
     engine = create_db_engine()
     result_df = pd.read_sql_query(query, con=engine)
     result = result_df.to_dict('records')
+    result = [{k: v for k, v in song.items() if v is not None} for song in result]
     result = [song for song in result if song['title'] not in shown_songs.get(song['artist'], [])]
     return result
