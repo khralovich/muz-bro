@@ -46,7 +46,7 @@ def main_menu(update: Update, context: CallbackContext):
         mood = reply
         update.callback_query.answer()
         print(mood)
-        songs_df = read_songs(genre=genre, mood=mood)
+        songs_df = read_songs(genre="test", mood=None)
         songs = songs_df.to_dict('records')
         html_render = HTML_TEMPLATE.render(
             artist_1=songs[0]['artist'], title_1=songs[0]['title'],
@@ -54,11 +54,11 @@ def main_menu(update: Update, context: CallbackContext):
             artist_3=songs[2]['artist'], title_3=songs[2]['title'],
             artist_4=songs[3]['artist'], title_4=songs[3]['title'],
             artist_5=songs[4]['artist'], title_5=songs[4]['title'],
-            platforms_1=[{"name": name, "url": url} for name, url in songs[0] if name in SELECTED_PLATFORMS],
-            platforms_2=[{"name": name, "url": url} for name, url in songs[1] if name in SELECTED_PLATFORMS],
-            platforms_3=[{"name": name, "url": url} for name, url in songs[2] if name in SELECTED_PLATFORMS],
-            platforms_4=[{"name": name, "url": url} for name, url in songs[3] if name in SELECTED_PLATFORMS],
-            platforms_5=[{"name": name, "url": url} for name, url in songs[4] if name in SELECTED_PLATFORMS],
+            platforms_1=[{"name": name, "url": url} for name, url in songs[0].items() if name in SELECTED_PLATFORMS],
+            platforms_2=[{"name": name, "url": url} for name, url in songs[1].items() if name in SELECTED_PLATFORMS],
+            platforms_3=[{"name": name, "url": url} for name, url in songs[2].items() if name in SELECTED_PLATFORMS],
+            platforms_4=[{"name": name, "url": url} for name, url in songs[3].items() if name in SELECTED_PLATFORMS],
+            platforms_5=[{"name": name, "url": url} for name, url in songs[4].items() if name in SELECTED_PLATFORMS],
         )
         context.bot.send_message(chat_id=update.effective_chat.id, text=html_render, parse_mode="HTML" ,reply_markup=like_buttons())
 
