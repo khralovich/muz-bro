@@ -36,7 +36,7 @@ def start(update: Update, context: CallbackContext):
 
 
 def main_menu(update: Update, context: CallbackContext):
-    shown_songs = context.user_data.get(shown_songs, 0)
+    shown_songs = context.user_data.get('shown_songs', 0)
     reply = update.callback_query.data
     if reply in all_genres:
         # User selected the genre
