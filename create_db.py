@@ -49,6 +49,8 @@ def write_songs(ytmusic, songs: list[dict]):
             artist_name=song['Artist'],
             song_name=song['Title']
             )
+        if ytmusic_song is None:
+            continue
         url = get_song_url(ytmusic_song)
         artists.append(song['Artist'])
         titles.append(song['Title'])

@@ -11,7 +11,9 @@ def get_artist_songs(youtube_music_client, artist_name: str, n_songs: int) -> li
 def get_artist_title_song(youtube_music_client, artist_name, song_name) -> dict:
     search_requst = artist_name + " - " + song_name
     songs = youtube_music_client.search(query=search_requst, filter="songs")
-    return songs[0]
+    if len(songs) > 0:
+        return songs[0]
+    return None
 
 def get_song_url(song: dict):
     return youtube_url_format.format(song['videoId'])
