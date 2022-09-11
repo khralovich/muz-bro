@@ -12,7 +12,6 @@ from config import API_KEY
 updater = Updater(API_KEY, use_context=True)
 
 user_reply = None
-shown_songs = 0
 
 # HTML template
 HTML_TEMPLATE = jinja2.Template(
@@ -28,6 +27,8 @@ HTML_TEMPLATE = jinja2.Template(
 all_genres = ['Здзіві мяне!', "Фолк", 'Поп', 'Метал', 'Індзі', 'Рэп', 'Рок', 'Электроніка', 'Skip genre']
 all_moods = ['Імпрэза', 'Спорт', 'Рамантыка', 'Разбітае сэрцайка', 'Медытацыя','Чыл','У дарозе','Самота','Надзея','Праца\вучоба','Skip mood']
 goback = ["Назад"]
+shown_songs = 0
+
 
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id,
