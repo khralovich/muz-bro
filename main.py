@@ -49,6 +49,7 @@ def main_menu(update: Update, context: CallbackContext):
         print(reply)
         update.callback_query.answer()
         songs = read_songs(genre="test", mood=None, shown_songs=shown_songs)
+        print('Read songs!')
         n_songs = len(songs)
         if n_songs >= 5:
             html_render = HTML_TEMPLATE.render(
