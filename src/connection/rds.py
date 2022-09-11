@@ -19,7 +19,7 @@ def create_db_engine():
     engine = create_engine(sql_alchemy_db_url)
     return engine
 
-def read_songs(genre: str = None, mood: str = None):
+def read_songs(genre: str = None, mood: str = None, shown_songs: dict = []):
     if genre == "skip_genre":
         genre = None
     if mood == "skip_mood":
@@ -39,4 +39,7 @@ def read_songs(genre: str = None, mood: str = None):
         query = f"select * from public.songs where '{mood}' = ANY(mood)"
     engine = create_db_engine()
     result_df = pd.read_sql_query(query, con=engine)
-    return result_df
+    result = result_df.to_dict('records')
+    result = [{k: v for k, v in song.items() if v is not None} for song in result]
+    result = [song for song in result if song['title'] not in shown_songs.get(song['artist'], [])]
+    return result
