@@ -19,6 +19,10 @@ def create_db_engine():
     return engine
 
 def read_songs(genre: str = None, mood: str = None):
+    if genre == "skip_genre":
+        genre = None
+    if mood == "skip_mood":
+        mood = None
     if genre is None and mood is None:
         # None of genre/mood selected
         query = "select * from public.songs"
