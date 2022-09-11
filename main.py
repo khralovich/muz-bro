@@ -12,7 +12,7 @@ from config import API_KEY
 updater = Updater(API_KEY, use_context=True)
 
 user_reply = None
-
+shown_songs = 0
 
 # HTML template
 HTML_TEMPLATE = jinja2.Template(
